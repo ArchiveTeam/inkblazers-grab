@@ -33,7 +33,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   end
   
   if item_type == "illustration" and (downloaded[url] ~= true and addedtolist[url] ~= true) then
-    if string.match(url, "/"..illu_name.."/") or string.match(url, "/"..illu_number.."/") then
+    if string.match(url, "[^0-9]"..illu_name.."[^0-9]") or string.match(url, "[^0-9]"..illu_number.."[^0-9]") then
       return verdict
     elseif html == 0 then
       return verdict
@@ -65,9 +65,9 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       html = read_file(file)
       local datalink = string.match(html, 'data%-link="[^"]+"')
       check(datalink)
-      local datapicture = string.match(html, 'data-picture="[^"]+"')
+      local datapicture = string.match(html, 'data%-picture="[^"]+"')
       check(datapicture)
-      local dataurl1 = string.match(html, 'data-url="[^"]+"')
+      local dataurl1 = string.match(html, 'data%-url="[^"]+"')
       local dataurl = "http://www.inkblazers.com"..dataurl1
       check(dataurl)
     end
