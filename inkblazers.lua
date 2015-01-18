@@ -67,7 +67,8 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       check(datalink)
       local datapicture = string.match(html, 'data-picture="[^"]+"')
       check(datapicture)
-      local dataurl = "http://www.inkblazers.com"..string.match(html, 'data-url="[^"]+"')
+      local dataurl1 = string.match(html, 'data-url="[^"]+"')
+      local dataurl = "http://www.inkblazers.com"..dataurl1
       check(dataurl)
     end
   end
