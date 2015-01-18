@@ -197,6 +197,11 @@ class WgetArgs(object):
         assert item_type in ('app')
         
         if item_type == 'illustration':
+            illu_name, illu_number = item_value.split(':', 1)
+            item['illu_name'] = illu_name
+            item['illu_number'] = illu_number
+            wget_args.append('http://www.inkblazers.com/illustrations/{0}/detail-page/{1}'.format(illu_name, illu_number))
+            wget_args.append('http://illustration.images.inkblazers.com/{0}/original.jpg'.format(illu_number))
         else:
             raise Exception('Unknown item')
         
@@ -236,6 +241,8 @@ pipeline = Pipeline(
             "item_dir": ItemValue("item_dir"),
             "item_value": ItemValue("item_value"),
             "item_type": ItemValue("item_type"),
+            "illu_name": ItemValue("illu_name"),
+            "illu_number": ItemValue("illu_number"),
         }
     ),
     PrepareStatsForTracker(
