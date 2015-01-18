@@ -63,6 +63,11 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     end
     if string.match(url, "inkblazers%.com/illustrations/[^/]+/detail%-page/[0-9]+") then
       html = read_file(file)
+      for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
+        if string.match(newurl, "images%.inkblazers%.com") then
+          check(newurl)
+        end
+      end
       local dataurl1 = string.match(html, 'data%-url="([^"]+)"')
       local dataurl = "http://www.inkblazers.com"..dataurl1
       check(dataurl)
