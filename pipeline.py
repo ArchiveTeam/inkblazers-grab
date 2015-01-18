@@ -202,7 +202,6 @@ class WgetArgs(object):
             item['illu_name'] = illu_name
             item['illu_number'] = illu_number
             wget_args.append('http://www.inkblazers.com/illustrations/{0}/detail-page/{1}'.format(illu_name, illu_number))
-            wget_args.append('http://illustration.images.inkblazers.com/{0}/original.jpg'.format(illu_number))
         else:
             raise Exception('Unknown item')
         
