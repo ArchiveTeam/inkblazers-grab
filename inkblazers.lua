@@ -61,7 +61,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       local newurl = string.match(url, "(https?://illustration%.images%.inkblazers%.com/[0-9]+/[^%?]+)%?")
       check(newurl)
     end
-    if string.match(url, "inkblazers%.com/illustrations/"..illu_name.."/detail%-page/"..illu_number) then
+    if string.match(url, "inkblazers%.com/illustrations/[^/]+/detail%-page/[0-9]+") then
       html = read_file(file)
       local datalink = string.match(html, 'data%-link="([^"]+)"')
       check(datalink)
