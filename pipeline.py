@@ -194,7 +194,7 @@ class WgetArgs(object):
         item['item_type'] = item_type
         item['item_value'] = item_value
         
-        assert item_type in ('app')
+        assert item_type in ('illustration')
         
         if item_type == 'illustration':
             assert ':' in item_value
