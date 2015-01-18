@@ -32,7 +32,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     return false
   end
   
-  if item_type == "illustration" and (downloaded[url] ~= true and addedtolist[url] ~= true) then
+  if (item_type == "illustration" and (downloaded[url] ~= true and addedtolist[url] ~= true)) or string.match(url, "images%.inkblazers%.com") then
     if string.match(url, "[^0-9]"..illu_name.."[^0-9]") or string.match(url, "[^0-9]"..illu_number.."[^0-9]") then
       return verdict
     elseif html == 0 then
