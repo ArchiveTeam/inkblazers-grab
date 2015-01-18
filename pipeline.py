@@ -202,6 +202,8 @@ class WgetArgs(object):
             item['illu_name'] = illu_name
             item['illu_number'] = illu_number
             wget_args.append('http://www.inkblazers.com/illustrations/{0}/detail-page/{1}'.format(illu_name, illu_number))
+            wget_args.append('http://www.inkblazers.com/load-fans.json?viewTypeString=illustration&viewTypeKey={0}'.format(illu_number))
+            wget_args.append('http://www.inkblazers.com/api/1.0/comments.json?viewTypeString=illustration&viewTypeKey={0}&sort-criteria=latest'.format(illu_number))
         else:
             raise Exception('Unknown item')
         
