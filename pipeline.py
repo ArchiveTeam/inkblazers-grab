@@ -197,6 +197,7 @@ class WgetArgs(object):
         assert item_type in ('app')
         
         if item_type == 'illustration':
+            assert ':' in item_value
             illu_name, illu_number = item_value.split(':', 1)
             item['illu_name'] = illu_name
             item['illu_number'] = illu_number
