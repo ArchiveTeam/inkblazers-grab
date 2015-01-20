@@ -95,14 +95,15 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     end
     if string.match(url, "inkblazers%.com/api/1%.0/") then
       html = read_file(file)
-      for newurl in string.gmatch(html, '"https?://[^"]+"') do
+      for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
         if string.match(newurl, "images%.inkblazers%.com/") then
           check(newurl)
         end
       end
-      for newurl in string.gmatch(html, '"/read%-manga/[^"]+"') do
-        if string.match(newurl, "/"..illu_number.."/[0-9]+/[0-9]+/") then
-          check(newurl)
+      for newurl in string.gmatch(html, '"(/read%-manga/[^"]+)"') do
+        local nurl = "http://www.inkblazers.com"..newurl
+        if string.match(nurl, "/"..illu_number.."/[0-9]+/[0-9]+/") then
+          check(nurl)
         end
       end
     end
