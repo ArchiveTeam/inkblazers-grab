@@ -113,6 +113,15 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
         if string.match(newurl, "images%.inkblazers%.com") then
           check(newurl)
         end
+        if string.match(newurl, "/"..illu_number.."/[0-9]+/[0-9]+") then
+          check(newurl)
+        end
+      end
+      for newurl in string.gmatch(html, '"(/[^"]+)"') do
+        local nurl = "http://www.inkblazers.com"..newurl
+        if string.match(nurl, "/"..illu_number.."/[0-9]+/[0-9]+/") then
+          check(nurl)
+        end
       end
     end
   end
