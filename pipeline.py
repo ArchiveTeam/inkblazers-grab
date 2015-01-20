@@ -194,7 +194,7 @@ class WgetArgs(object):
         item['item_type'] = item_type
         item['item_value'] = item_value
         
-        assert item_type in ('illustration')
+        assert item_type in ('illustration', 'manga')
         
         if item_type == 'illustration':
             assert ':' in item_value
@@ -204,6 +204,12 @@ class WgetArgs(object):
             wget_args.append('http://www.inkblazers.com/illustrations/{0}/detail-page/{1}'.format(illu_name, illu_number))
             wget_args.append('http://www.inkblazers.com/load-fans.json?viewTypeString=illustration&viewTypeKey={0}'.format(illu_number))
             wget_args.append('http://www.inkblazers.com/api/1.0/comments.json?viewTypeString=illustration&viewTypeKey={0}&sort-criteria=latest'.format(illu_number))
+        elif item_type == 'manga':
+            assert ':' in item_value
+            illu_name, illu_number = item_value.split(':', 1)
+            item['illu_name'] = illu_name
+            item['illu_number'] = illu_number
+            wget_args.append('http://www.inkblazers.com/manga-and-comics/{0}/detail-page/{0}'.format(illu_name, illu_number))
         else:
             raise Exception('Unknown item')
         
