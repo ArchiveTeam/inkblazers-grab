@@ -209,6 +209,11 @@ class WgetArgs(object):
             illu_name, illu_number = item_value.split(':', 1)
             item['illu_name'] = illu_name
             item['illu_number'] = illu_number
+            wget_args.append('http://manga.images.inkblazers.com/{0}/original.jpg'.format(illu_number))
+            wget_args.append('http://www.inkblazers.com/load-fans.json?viewTypeString=manga&viewTypeKey={0}'.format(illu_number))
+            wget_args.append('http://www.inkblazers.com/api/1.0/manga-and-comics/chapters.json?key={0}&limit=100000&offset=0&sort-criteria=oldest'.format(illu_number))
+            wget_args.append('http://www.inkblazers.com/api/1.0/topics.json?viewTypeString=manga&viewTypeKey={0}&sort-criteria=latest&number-per-page=100000'.format(illu_number))
+            wget_args.append('http://www.inkblazers.com/api/1.0/comments.json?viewTypeString=manga&viewTypeKey={0}&sort-criteria=latest&number-per-page=100000'.format(illu_number))
             wget_args.append('http://www.inkblazers.com/manga-and-comics/{0}/detail-page/{0}'.format(illu_name, illu_number))
         else:
             raise Exception('Unknown item')
