@@ -102,11 +102,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       end
       for newurl in string.gmatch(html, '"(/[^"]+)"') do
         local nurl = "http://www.inkblazers.com"..newurl
-        io.stdout:write("added "..nurl)
-        io.stdout:flush()
-        if string.match(nurl, "/"..illu_number.."/[0-9]+/[0-9]+/") then
-          io.stdout:write("checking "..nurl)
-          io.stdout:flush()
+        if string.match(nurl, "/"..illu_number.."/[0-9]+/[0-9]+") then
           check(nurl)
         end
       end
@@ -120,11 +116,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       end
       for newurl in string.gmatch(html, '"(/[^"]+)"') do
         local nurl = "http://www.inkblazers.com"..newurl
-        io.stdout:write("added "..nurl)
-        io.stdout:flush()
-        if string.match(nurl, "/"..illu_number.."/[0-9]+/[0-9]+/") then
-          io.stdout:write("checking "..nurl)
-          io.stdout:flush()
+        if string.match(nurl, "/"..illu_number.."/[0-9]+/[0-9]+") then
           check(nurl)
         end
       end
