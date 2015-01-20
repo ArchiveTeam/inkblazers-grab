@@ -32,8 +32,18 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     return false
   end
   
-  if (item_type == "illustration" and (downloaded[url] ~= true and addedtolist[url] ~= true)) or string.match(url, "images%.inkblazers%.com") then
+  if string.match(url, "images%.inkblazers%.com") then
+    return verdict
+  elseif item_type == "illustration" and (downloaded[url] ~= true and addedtolist[url] ~= true) then
     if string.match(url, "[^0-9]"..illu_name.."[^0-9]") or string.match(url, "[^0-9]"..illu_number.."[^0-9]") then
+      return verdict
+    elseif html == 0 then
+      return verdict
+    else
+      return false
+    end
+  elseif item_type == "manga" and (downloaded[url] ~= true and addedtolist[url] ~= true) then
+    if string.match(url, "/"..illu_number.."/[0-9]+/[0-9]+") then
       return verdict
     elseif html == 0 then
       return verdict
@@ -77,6 +87,32 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       end
       local datapicture = string.match(html, 'data%-picture="([^"]+)"')
       check(datapicture)
+    end
+  elseif item_type == "manga" then
+    if string.match(url, "images%.inkblazers%.com/[0-9]+/[^%?]+%?") then
+      local newurl = string.match(url, "(https?://[^/]+/[0-9]+/[^%?]+)%?")
+      check(newurl)
+    end
+    if string.match(url, "inkblazers%.com/api/1%.0/") then
+      html = read_file(file)
+      for newurl in string.gmatch(html, '"https?://[^"]+"') do
+        if string.match(newurl, "images%.inkblazers%.com/") then
+          check(newurl)
+        end
+      end
+      for newurl in string.gmatch(html, '"/read%-manga/[^"]+"') do
+        if string.match(newurl, "/"..illu_num.."/[0-9]+/[0-9]+/") then
+          check(newurl)
+        end
+      end
+    end
+    if string.match(url, "inkblazers%.com/manga%-and%-comics/"..illu_name.."/detail%-page/".illu_number) or string.match(url, "inkblazers%.com/read%-manga/[^/]+/"..illu_number.."/[0-9]+/[0-9]+") then
+      html = read_file(file)
+      for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
+        if string.match(newurl, "images%.inkblazers%.com") then
+          check(newurl)
+        end
+      end
     end
   end
   
