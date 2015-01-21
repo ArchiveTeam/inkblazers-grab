@@ -43,7 +43,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return false
     end
   elseif item_type == "manga" and (downloaded[url] ~= true and addedtolist[url] ~= true) then
-    if string.match(url, "/"..illu_number.."/[0-9]+/[0-9]+") then
+    if string.match(url, "/"..illu_number.."/[0-9]+/[0-9]+") or string.match(url, "inkblazers%.com/assets/") then
       return verdict
     elseif html == 0 then
       return verdict
@@ -96,13 +96,13 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     if string.match(url, "inkblazers%.com/api/1%.0/") then
       html = read_file(file)
       for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
-        if string.match(newurl, "images%.inkblazers%.com/") then
+        if string.match(newurl, "images%.inkblazers%.com/") or string.match(url, "inkblazers%.com/assets/") then
           check(newurl)
         end
       end
       for newurl in string.gmatch(html, '"(/[^"]+)"') do
         local nurl = "http://www.inkblazers.com"..newurl
-        if string.match(nurl, "/"..illu_number.."/[0-9]+/[0-9]+") then
+        if string.match(nurl, "/"..illu_number.."/[0-9]+/[0-9]+") or string.match(nurl, "/assets/") then
           check(nurl)
         end
       end
@@ -110,13 +110,13 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     if string.match(url, "inkblazers%.com/manga%-and%-comics/"..illu_name.."/detail%-page/"..illu_number) or string.match(url, "inkblazers%.com/read%-manga/[^/]+/"..illu_number.."/[0-9]+/[0-9]+") then
       html = read_file(file)
       for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
-        if string.match(newurl, "images%.inkblazers%.com") or string.match(newurl, "/"..illu_number.."/[0-9]+/[0-9]+") then
+        if string.match(newurl, "images%.inkblazers%.com") or string.match(newurl, "/"..illu_number.."/[0-9]+/[0-9]+") or string.match(url, "inkblazers%.com/assets/") then
           check(newurl)
         end
       end
       for newurl in string.gmatch(html, '"(/[^"]+)"') do
         local nurl = "http://www.inkblazers.com"..newurl
-        if string.match(nurl, "/"..illu_number.."/[0-9]+/[0-9]+") then
+        if string.match(nurl, "/"..illu_number.."/[0-9]+/[0-9]+") or string.match(nurl, "/assets/") then
           check(nurl)
         end
       end
