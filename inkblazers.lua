@@ -96,7 +96,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     if string.match(url, "inkblazers%.com/api/1%.0/") then
       html = read_file(file)
       for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
-        if string.match(newurl, "images%.inkblazers%.com/") or string.match(url, "inkblazers%.com/assets/") then
+        if string.match(newurl, "images%.inkblazers%.com/") or string.match(newurl, "inkblazers%.com/assets/") then
           check(newurl)
         end
       end
@@ -110,7 +110,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     if string.match(url, "inkblazers%.com/manga%-and%-comics/"..illu_name.."/detail%-page/"..illu_number) or string.match(url, "inkblazers%.com/read%-manga/[^/]+/"..illu_number.."/[0-9]+/[0-9]+") then
       html = read_file(file)
       for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
-        if string.match(newurl, "images%.inkblazers%.com") or string.match(newurl, "/"..illu_number.."/[0-9]+/[0-9]+") or string.match(url, "inkblazers%.com/assets/") then
+        if string.match(newurl, "images%.inkblazers%.com") or string.match(newurl, "/"..illu_number.."/[0-9]+/[0-9]+") or string.match(newurl, "inkblazers%.com/assets/") then
           check(newurl)
         end
       end
