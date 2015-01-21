@@ -89,6 +89,10 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       check(datapicture)
     end
   elseif item_type == "manga" then
+    if string.match(url, "inkblazers%.com/[^%?]+%?lang=") then
+      local newurl = string.match(url, "(https?://[^/]+/[^%?]+)%?lang=")
+      check(newurl)
+    end
     if string.match(url, "images%.inkblazers%.com/[0-9]+/[^%?]+%?") then
       local newurl = string.match(url, "(https?://[^/]+/[0-9]+/[^%?]+)%?")
       check(newurl)
