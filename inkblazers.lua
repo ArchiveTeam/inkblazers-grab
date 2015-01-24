@@ -51,7 +51,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return false
     end
   elseif item_type == "blog" and (downloaded[url] ~= true and addedtolist[url] ~= true) then
-    if string.match(url, "/"..illu_name.."/") and string.match(url, "[^0-9]"..illu_number) and string.match(url, "inkblazers%.com") then
+    if (string.match(url, "/"..illu_name.."/") and string.match(url, "[^0-9]"..illu_number) and string.match(url, "inkblazers%.com")) or string.match(url, "inkblazers%.com/assets/") then
       return verdict
     elseif html == 0 then
       return verdict
@@ -149,7 +149,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
         end
       end
     end
-    if (string.match(url, "inkblazers.com") and string.match(url, "/"..illu_name.."/") and string.match(url, "/"..illu_number)) then
+    if (string.match(url, "inkblazers%.com") and string.match(url, "/"..illu_name.."/") and string.match(url, "/"..illu_number)) then
       html = read_file(file)
       for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
         if string.match(newurl, "images%.inkblazers%.com") or (string.match(newurl, "inkblazers%.com") and string.match(newurl, "/"..illu_name.."/") and string.match(newurl, "/"..illu_number)) or string.match(newurl, "inkblazers%.com/assets/") then
