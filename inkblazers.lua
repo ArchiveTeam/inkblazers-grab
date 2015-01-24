@@ -156,14 +156,13 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
           check(newurl)
         end
       end
-      for newurl in string.gmatch(html, '"(/[^"]+)"') do
-        local nurl = "http://www.inkblazers.com"..newurl
-        if (string.match(nurl, "/"..illu_name.."/") and string.match(nurl, "/"..illu_number)) or string.match(nurl, "/assets/") then
+      for neurl in string.gmatch(html, '"(/[^"]+)"') do
+        local nurl = "http://www.inkblazers.com"..neurl
+        if string.match(nurl, "/blogs/"..illu_name.."/[^/]+/"..illu_number) or string.match(nurl, "/assets/") then
           check(nurl)
         end
       end
     end
-    
   end
   
   return urls
