@@ -50,6 +50,14 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     else
       return false
     end
+  elseif item_type == "blog" and (downloaded[url] ~= true and addedtolist[url] ~= true) then
+    if string.match(url, "/"..illu_name.."/") and string.match(url, "[0-9]"..illu_number) and string.match(url, "inkblazers%.com)" then
+      return verdict
+    elseif html == 0 then
+      return verdict
+    else
+      return false
+    end
   end
   
 end
@@ -64,6 +72,11 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       table.insert(urls, { url=url })
       addedtolist[url] = true
     end
+  end
+
+  if string.match(url, "images%.inkblazers%.com/[^%?]+%?") then
+    local newurl = string.match(url, "(https?://[^/]+/[^%?]+)%?")
+    check(newurl)
   end
 
   if item_type == "illustration" then
@@ -91,10 +104,6 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
   elseif item_type == "manga" then
     if string.match(url, "inkblazers%.com/[^%?]+%?lang=") then
       local newurl = string.match(url, "(https?://[^/]+/[^%?]+)%?lang=")
-      check(newurl)
-    end
-    if string.match(url, "images%.inkblazers%.com/[0-9]+/[^%?]+%?") then
-      local newurl = string.match(url, "(https?://[^/]+/[0-9]+/[^%?]+)%?")
       check(newurl)
     end
     if string.match(url, "inkblazers%.com/api/1%.0/") then
@@ -125,6 +134,36 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
         end
       end
     end
+  elseif item_type == "blog" then
+    if string.match(url, "inkblazers%.com/api/1%.0/") or string.match(url, "load%-fans") then
+      html = read_file(file)
+      for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
+        if string.match(newurl, "images%.inkblazers%.com/") or string.match(newurl, "inkblazers%.com/assets/") or (string.match(newurl, "inkblazers%.com") and string.match(newurl, "/"..illu_name.."/") and string.match(newurl, "[0-9]"..illu_number)) then
+          check(newurl)
+        end
+      end
+      for newurl in string.gmatch(html, '"(/[^"]+)"') do
+        local nurl = "http://www.inkblazers.com"..newurl
+        if (string.match(nurl, "/"..illu_name.."/") and string.match(nurl, "[0-9]"..illu_number)) or string.match(nurl, "/assets/") then
+          check(nurl)
+        end
+      end
+    end
+    if (string.match(url, "inkblazers.com") and string.match(url, "/"..illu_name.."/") and string.match(url, "/"..illu_name)) then
+      html = read_file(file)
+      for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
+        if string.match(newurl, "images%.inkblazers%.com") or (string.match(newurl, "inkblazers%.com") and string.match(newurl, "/"..illu_name.."/") and string.match(newurl, "[0-9]"..illu_number)) or string.match(newurl, "inkblazers%.com/assets/") then
+          check(newurl)
+        end
+      end
+      for newurl in string.gmatch(html, '"(/[^"]+)"') do
+        local nurl = "http://www.inkblazers.com"..newurl
+        if (string.match(newurl, "/"..illu_name.."/") and string.match(newurl, "[0-9]"..illu_number)) or string.match(nurl, "/assets/") then
+          check(nurl)
+        end
+      end
+    end
+    
   end
   
   return urls
