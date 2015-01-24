@@ -223,6 +223,7 @@ class WgetArgs(object):
             wget_args.append('http://www.inkblazers.com/load-fans.json?viewTypeString=blog&viewTypeKey={0}'.format(illu_number))
             wget_args.append('http://www.inkblazers.com/api/1.0/comments.json?viewTypeString=blog&viewTypeKey={0}&sort-criteria=latest'.format(illu_number))
             wget_args.append('http://www.inkblazers.com/blogs/{0}/detail-page/{1}'.format(illu_name, illu_number))
+            wget_args.append('http://www.inkblazers.com/blogs/{0}/detail-page/{1}?tab=fans'.format(illu_name, illu_number))
         else:
             raise Exception('Unknown item')
         
