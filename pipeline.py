@@ -57,7 +57,7 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = "20150122.01"
+VERSION = "20150124.01"
 USER_AGENT = 'ArchiveTeam'
 TRACKER_ID = 'inkblazers'
 TRACKER_HOST = 'tracker.archiveteam.org'
@@ -194,7 +194,7 @@ class WgetArgs(object):
         item['item_type'] = item_type
         item['item_value'] = item_value
         
-        assert item_type in ('illustration', 'manga')
+        assert item_type in ('illustration', 'manga', 'blog')
         
         if item_type == 'illustration':
             assert ':' in item_value
@@ -215,6 +215,14 @@ class WgetArgs(object):
             wget_args.append('http://www.inkblazers.com/api/1.0/topics.json?viewTypeString=manga&viewTypeKey={0}&sort-criteria=latest&number-per-page=100000'.format(illu_number))
             wget_args.append('http://www.inkblazers.com/api/1.0/comments.json?viewTypeString=manga&viewTypeKey={0}&sort-criteria=latest&number-per-page=100000'.format(illu_number))
             wget_args.append('http://www.inkblazers.com/manga-and-comics/{0}/detail-page/{1}'.format(illu_name, illu_number))
+        elif item_type == 'blog':
+            assert ':' in item_value
+            illu_name, illu_number = item_value.split(':', 1)
+            item['illu_name'] = illu_name
+            item['illu_number'] = illu_number
+            wget_args.append('http://www.inkblazers.com/load-fans.json?viewTypeString=blog&viewTypeKey={0}'.format(illu_number))
+            wget_args.append('http://www.inkblazers.com/api/1.0/comments.json?viewTypeString=blog&viewTypeKey={0}&sort-criteria=latest'.format(illu_number))
+            wget_args.append('http://www.inkblazers.com/blogs/{0}/detail-page/{1}'.format(illu_name, illu_number))
         else:
             raise Exception('Unknown item')
         
