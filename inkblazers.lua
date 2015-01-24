@@ -138,13 +138,13 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     if string.match(url, "inkblazers%.com/api/1%.0/") or string.match(url, "load%-fans") then
       html = read_file(file)
       for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
-        if string.match(newurl, "images%.inkblazers%.com/") or string.match(newurl, "inkblazers%.com/assets/") or (string.match(newurl, "inkblazers%.com") and string.match(newurl, "/"..illu_name.."/") and string.match(newurl, "[^0-9]"..illu_number)) then
+        if string.match(newurl, "images%.inkblazers%.com/") or string.match(newurl, "inkblazers%.com/assets/") or (string.match(newurl, "inkblazers%.com") and string.match(newurl, "/"..illu_name.."/") and string.match(newurl, "/"..illu_number)) then
           check(newurl)
         end
       end
       for newurl in string.gmatch(html, '"(/[^"]+)"') do
         local nurl = "http://www.inkblazers.com"..newurl
-        if (string.match(nurl, "/"..illu_name.."/") and string.match(nurl, "[^0-9]"..illu_number)) or string.match(nurl, "/assets/") then
+        if (string.match(nurl, "/"..illu_name.."/") and string.match(nurl, "/"..illu_number)) or string.match(nurl, "/assets/") then
           check(nurl)
         end
       end
@@ -152,13 +152,13 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     if (string.match(url, "inkblazers.com") and string.match(url, "/"..illu_name.."/") and string.match(url, "/"..illu_number)) then
       html = read_file(file)
       for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
-        if string.match(newurl, "images%.inkblazers%.com") or (string.match(newurl, "inkblazers%.com") and string.match(newurl, "/"..illu_name.."/") and string.match(newurl, "[^0-9]"..illu_number)) or string.match(newurl, "inkblazers%.com/assets/") then
+        if string.match(newurl, "images%.inkblazers%.com") or (string.match(newurl, "inkblazers%.com") and string.match(newurl, "/"..illu_name.."/") and string.match(newurl, "/"..illu_number)) or string.match(newurl, "inkblazers%.com/assets/") then
           check(newurl)
         end
       end
       for newurl in string.gmatch(html, '"(/[^"]+)"') do
         local nurl = "http://www.inkblazers.com"..newurl
-        if (string.match(nurl, "/"..illu_name.."/") and string.match(nurl, "[^0-9]"..illu_number)) or string.match(nurl, "/assets/") then
+        if (string.match(nurl, "/"..illu_name.."/") and string.match(nurl, "/"..illu_number)) or string.match(nurl, "/assets/") then
           check(nurl)
         end
       end
