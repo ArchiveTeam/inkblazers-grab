@@ -149,7 +149,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
         end
       end
     end
-    if (string.match(url, "inkblazers.com") and string.match(url, "/"..illu_name.."/") and string.match(url, "/"..illu_name)) then
+    if (string.match(url, "inkblazers.com") and string.match(url, "/"..illu_name.."/") and string.match(url, "/"..illu_number)) then
       html = read_file(file)
       for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
         if string.match(newurl, "images%.inkblazers%.com") or (string.match(newurl, "inkblazers%.com") and string.match(newurl, "/"..illu_name.."/") and string.match(newurl, "[^0-9]"..illu_number)) or string.match(newurl, "inkblazers%.com/assets/") then
@@ -158,7 +158,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       end
       for newurl in string.gmatch(html, '"(/[^"]+)"') do
         local nurl = "http://www.inkblazers.com"..newurl
-        if (string.match(newurl, "/"..illu_name.."/") and string.match(newurl, "[^0-9]"..illu_number)) or string.match(nurl, "/assets/") then
+        if (string.match(nurl, "/"..illu_name.."/") and string.match(nurl, "[^0-9]"..illu_number)) or string.match(nurl, "/assets/") then
           check(nurl)
         end
       end
