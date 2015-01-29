@@ -58,6 +58,14 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     else
       return false
     end
+  elseif item_type == "profile" and (downloaded[url] ~= true and addedtolist[url] ~= true) then
+    if (string.match(url, "/"..illu_name.."/") and string.match(url, "[^0-9]"..illu_number) and string.match(url, "inkblazers%.com")) or string.match(url, "inkblazers%.com/assets/") then
+      return verdict
+    elseif html == 0 then
+      return verdict
+    else
+      return false
+    end
   end
   
 end
@@ -159,6 +167,35 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       for neurl in string.gmatch(html, '"(/[^"]+)"') do
         local nurl = "http://www.inkblazers.com"..neurl
         if string.match(nurl, "/blogs/"..illu_name.."/[^/]+/"..illu_number) or string.match(nurl, "/assets/") then
+          check(nurl)
+        end
+      end
+    end
+  elseif item_type == "profile" then
+    if string.match(url, "inkblazers%.com/api/1%.0/") or string.match(url, "load%-fans") or string.match(url, "favorites%-page") then
+      html = read_file(file)
+      for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
+        if string.match(newurl, "images%.inkblazers%.com/") or string.match(newurl, "inkblazers%.com/assets/") or (string.match(newurl, "inkblazers%.com") and string.match(newurl, "/"..illu_name.."/") and string.match(newurl, "/"..illu_number)) then
+          check(newurl)
+        end
+      end
+      for newurl in string.gmatch(html, '"(/[^"]+)"') do
+        local nurl = "http://www.inkblazers.com"..newurl
+        if (string.match(nurl, "/"..illu_name.."/") and string.match(nurl, "/"..illu_number)) or string.match(nurl, "/assets/") then
+          check(nurl)
+        end
+      end
+    end
+    if (string.match(url, "inkblazers%.com") and string.match(url, "/"..illu_name.."/") and string.match(url, "/"..illu_number)) then
+      html = read_file(file)
+      for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
+        if string.match(newurl, "images%.inkblazers%.com") or (string.match(newurl, "inkblazers%.com") and string.match(newurl, "/"..illu_name.."/") and string.match(newurl, "/"..illu_number)) or string.match(newurl, "inkblazers%.com/assets/") then
+          check(newurl)
+        end
+      end
+      for neurl in string.gmatch(html, '"(/[^"]+)"') do
+        local nurl = "http://www.inkblazers.com"..neurl
+        if string.match(nurl, "/authors%-and%-artists/"..illu_name.."/[^/]+/"..illu_number) or string.match(nurl, "/assets/") then
           check(nurl)
         end
       end
